@@ -12,7 +12,7 @@ export class TangleService {
 
     constructor() {
         this.client = new Client({
-            nodes: ['https://api.testnet.shimmer.network'], // Nodo de IOTA
+            nodes: ['http://34.229.104.127:14265'], // Nodo de IOTA (test: https://api.testnet.shimmer.network)
         });
     }
 
