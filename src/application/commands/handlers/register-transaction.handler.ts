@@ -1,22 +1,19 @@
 // src/application/commands/handlers/register-transaction.handler.ts
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { TangleService } from 'src/tangle/tangle.service';
+import { Inject } from '@nestjs/common';
 import { RegisterTransactionCommand } from '../register-transaction.command';
-import { IBuildBlockOptions } from '@iota/sdk';
+import { ITransactionService } from 'src/tangle/interfaces/transaction-service.interface';
+import { TRANSACTION_SERVICE } from 'src/tangle/constants/tangle-service-token';
 
 @CommandHandler(RegisterTransactionCommand)
-export class RegisterTransactionHandler
-    implements ICommandHandler<RegisterTransactionCommand> {
-    constructor(private readonly tangleService: TangleService) { }
+export class RegisterTransactionHandler implements ICommandHandler<RegisterTransactionCommand> {
+    constructor(
+        @Inject(TRANSACTION_SERVICE) // Usa el token para inyectar el servicio correcto
+        private readonly transactionService: ITransactionService
+    ) {}
 
     async execute(command: RegisterTransactionCommand): Promise<any> {
-        const buildBlockOptions: IBuildBlockOptions = {
-            output: {
-                address: command.transactionData.address,
-                amount: BigInt(command.transactionData.amount)
-            }
-        };
-
-        return await this.tangleService.registerTransaction(buildBlockOptions);
+        const { transactionData, tag } = command;
+        return await this.transactionService.registerTransaction(transactionData, tag);
     }
 }

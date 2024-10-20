@@ -22,4 +22,5 @@ export enum ApiErrorCode {
 
     // Errores de Transacciones de Registro
     TransactionError = 3000,
+    InvalidData = 3001,
 }
