@@ -1,7 +1,7 @@
 import { Controller, HttpStatus } from '@nestjs/common';
 import { ApiResponse } from '../responses/api-response';
 import { CustomException } from '../exceptions/custom-exception';
-import { ApiErrorCode } from '../Enums/api-error-code.enum';
+import { ApiErrorCode } from '../enums/api-error-code.enum';
 
 @Controller()
 export class CustomController {

@@ -1,7 +1,7 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, BadRequestException } from '@nestjs/common';
 import { ApiResponseHelper } from '../responses/api-response.helper';
 import { CustomException } from '../exceptions/custom-exception';
-import { ApiErrorCode } from '../Enums/api-error-code.enum';
+import { ApiErrorCode } from '../enums/api-error-code.enum';
 
 @Catch(HttpException)
 export class GlobalExceptionHandler implements ExceptionFilter {
