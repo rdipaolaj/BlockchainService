@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Clear cache
+        run: rm -rf node_modules dist
+
       - name: Install dependencies
         run: npm ci
 
