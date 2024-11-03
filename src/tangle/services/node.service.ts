@@ -1,9 +1,9 @@
 // src/tangle/services/node.service.ts
 import { Injectable, Logger } from '@nestjs/common';
 import { Client } from '@iota/sdk';
-import { ApiResponseHelper } from '@app/common/responses/api-response.helper';
-import { ApiResponse } from '@app/common/responses/api-response';
-import { ApiErrorCode } from '@app/common/enums/api-error-code.enum';
+import { ApiResponseHelper } from 'src/common/responses/api-response.helper';
+import { ApiResponse } from 'src/common/responses/api-response';
+import { ApiErrorCode } from 'src/common/enums/api-error-code.enum';
 import { INodeService } from '../interfaces/node-service.interface';
 
 @Injectable()
