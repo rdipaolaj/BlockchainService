@@ -27,6 +27,9 @@ jobs:
       - name: Install tsconfig-paths
         run: npm install tsconfig-paths --save-dev
 
+      - name: List files
+        run: ls -R src dist || echo "No files found"
+
       - name: Build project
         run: npm run build
       
