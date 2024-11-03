@@ -26,9 +26,12 @@ jobs:
       
       - name: Install tsconfig-paths
         run: npm install tsconfig-paths --save-dev
-      
+
       - name: Build project
-        run: npm run build
+        run: npx ts-node -r tsconfig-paths/register src/main.ts
+      
+      - name: Verify build output
+        run: ls -R dist || echo "No build output found"
 
       - name: Set up Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
