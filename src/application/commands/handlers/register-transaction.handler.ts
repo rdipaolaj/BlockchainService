@@ -2,8 +2,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { RegisterTransactionCommand } from '../register-transaction.command';
-import { ITransactionService } from 'src/tangle/interfaces/transaction-service.interface';
-import { TRANSACTION_SERVICE } from 'src/tangle/constants/tangle-service-token';
+import { ITransactionService } from '@app/tangle/interfaces/transaction-service.interface';
+import { TRANSACTION_SERVICE } from '@app/tangle/constants/tangle-service-token';
 
 @CommandHandler(RegisterTransactionCommand)
 export class RegisterTransactionHandler implements ICommandHandler<RegisterTransactionCommand> {
