@@ -1,7 +1,7 @@
 # Etapa de construcción: usa node:18-bullseye para construir la aplicación
 FROM node:18-bullseye as builder
 
-# Instalar Rust, Cargo y libudev
+# Instalar Rust, Cargo y libudev (si son necesarios para tu proyecto)
 RUN apt-get update && apt-get install -y curl libudev1 && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     export PATH="$HOME/.cargo/bin:$PATH"
@@ -12,13 +12,16 @@ WORKDIR /app
 # Copiar package.json y package-lock.json
 COPY package*.json ./
 
-# Instalar dependencias
-RUN npm install
+# Instalar dependencias usando `npm ci` para un entorno de construcción más confiable
+RUN npm ci
 
-# Copiar el resto de los archivos
+# Copiar el resto de los archivos al directorio de trabajo
 COPY . .
 
-# Ejecutar la compilación
+# Temporal: listar archivos en /app/src para depuración y asegurar que todo se copia correctamente
+RUN ls -R /app/src
+
+# Ejecutar la compilación de TypeScript a JavaScript
 RUN npm run build
 
 # Etapa final: crear una imagen ligera solo con lo necesario para ejecutar el código
@@ -28,7 +31,7 @@ FROM node:18-slim
 WORKDIR /app
 
 # Instalar las dependencias necesarias para ejecutar el SDK de IOTA
-RUN apt-get update && apt-get install -y libudev1 libc6
+RUN apt-get update && apt-get install -y libudev1 libc6 && rm -rf /var/lib/apt/lists/*
 
 # Copiar dependencias de producción desde la etapa de construcción
 COPY --from=builder /app/node_modules ./node_modules
