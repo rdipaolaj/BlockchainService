@@ -1,7 +1,6 @@
 // src/common/responses/api-response.helper.ts
 import { ApiResponse } from './api-response';
-import { ErrorDetail } from './error-detail';
-import { ApiErrorCode } from '../enums/api-error-code.enum';  // Asegúrate de usar el enum correcto
+import { ErrorDetail } from './error-detail';  // Asegúrate de usar el enum correcto
 
 export class ApiResponseHelper {
     static createSuccessResponse<T>(data: T, message: string = 'Operation completed successfully.'): ApiResponse<T> {
