@@ -28,7 +28,7 @@ jobs:
         run: npm install tsconfig-paths --save-dev
 
       - name: Build project
-        run: npx ts-node -r tsconfig-paths/register --project tsconfig.build.json src/main.ts
+        run: tsc --project tsconfig.build.json
       
       - name: Verify build output
         run: ls -R dist || echo "No build output found"
