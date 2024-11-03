@@ -1,5 +1,5 @@
 // src/common/responses/api-response.ts
-import { DatetimeHelper } from 'src/common/helpers/datetime.helper';
+import { DatetimeHelper } from '@app/common/helpers/datetime.helper';
 import { ErrorDetail } from './error-detail'; // Importar ErrorDetail
 
 export class ApiResponse<T> {

@@ -2,8 +2,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { GetNodeInfoQuery } from '../get-node-info.query';
-import { INodeService } from 'src/tangle/interfaces/node-service.interface';
-import { NODE_SERVICE } from 'src/tangle/constants/tangle-service-token';
+import { INodeService } from '@app/tangle/interfaces/node-service.interface';
+import { NODE_SERVICE } from '@app/tangle/constants/tangle-service-token';
 
 @QueryHandler(GetNodeInfoQuery)
 export class GetNodeInfoHandler implements IQueryHandler<GetNodeInfoQuery> {
