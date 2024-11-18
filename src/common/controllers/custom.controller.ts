@@ -16,8 +16,30 @@ export class CustomController {
             // Devuelve un 200 si la respuesta es exitosa
             return apiResponse;
         } else {
-            // Lanza una excepción con el código de error adecuado
-            throw new CustomException(ApiErrorCode.ValidationError, 'Invalid input data provided.', 400);
+            const errorCode = this.getValidatedErrorCode(apiResponse.errors[0]?.code);
+            console.log(`CustomController: ${errorCode} - ${apiResponse.errors[0]?.description}`);
+            const errorMessage = apiResponse.errors[0]?.description || apiResponse.message || 'Datos de entrada no válidos.';
+            const statusCode = apiResponse.statusCode || HttpStatus.BAD_REQUEST;
+
+            throw new CustomException(errorCode, errorMessage, statusCode);
+        }
+    }
+
+    /**
+     * Verifica si el código de error es válido y lo convierte a ApiErrorCode, o devuelve un valor predeterminado.
+     * @param code Código de error a validar
+     * @returns Un ApiErrorCode válido
+     */
+    private getValidatedErrorCode(code: string | undefined): ApiErrorCode {
+        // Convertimos 'code' a 'unknown' antes de compararlo
+        const parsedCode = code as unknown as ApiErrorCode;
+
+        // Verificamos si parsedCode es un valor válido en ApiErrorCode
+        if (Object.values(ApiErrorCode).includes(parsedCode)) {
+            return parsedCode;
+        } else {
+            // Devolvemos un valor por defecto, en este caso ValidationError, si no es válido
+            return ApiErrorCode.ValidationError;
         }
     }
 }
