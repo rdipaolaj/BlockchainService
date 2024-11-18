@@ -7,6 +7,6 @@ export class CustomException extends HttpException {
         public readonly message: string,
         public readonly statusCode: number = 400  // Valor por defecto para el código de estado HTTP
     ) {
-        super({ errorCode, message }, statusCode);
+        super({ errorCode: errorCode.toString(), message }, statusCode);
     }
 }

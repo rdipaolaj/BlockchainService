@@ -13,20 +13,23 @@ export class GlobalExceptionHandler implements ExceptionFilter {
         let errorResponse;
 
         if (exception instanceof CustomException) {
-            // Si es una CustomException, formateamos la respuesta con el código y mensaje personalizados
+            // Extracción del errorCode y message desde exception.getResponse()
+            const customResponse = exception.getResponse() as any;
+            const errorCode = customResponse.errorCode || ApiErrorCode.UnknownError.toString();
+            const errorMessage = customResponse.message || 'Ocurrió un error desconocido.';
+
+            console.log(`CustomException: ${errorCode} - ${errorMessage}`);
+            console.log(customResponse);
+            
             errorResponse = ApiResponseHelper.createErrorResponse(
-                exception.message,
+                errorMessage,
                 status,
-                [{ code: exception.errorCode.toString(), description: exception.message }]
+                [{ code: errorCode, description: errorMessage }]
             );
         } else if (exception instanceof BadRequestException) {
-            // Procesar los errores de validación lanzados por ValidationPipe
             const validationResponse = exception.getResponse() as any;
-            
-            // Verificamos si validationResponse tiene errores de validación
             const validationErrors = validationResponse.message;
 
-            // Si hay errores de validación, los formateamos
             const formattedErrors = Array.isArray(validationErrors)
                 ? validationErrors.map((error: any) => ({
                     code: ApiErrorCode.ValidationError.toString(),
@@ -37,18 +40,18 @@ export class GlobalExceptionHandler implements ExceptionFilter {
                     description: 'Invalid data'
                 }];
 
-            // Creamos la respuesta de error con los errores de validación formateados
             errorResponse = ApiResponseHelper.createErrorResponse(
                 'Validation failed',
                 status,
                 formattedErrors
             );
         } else {
-            // Para cualquier otro HttpException
+            // Otros tipos de HttpException
+            const errorCode = ApiErrorCode.UnknownError.toString();
             errorResponse = ApiResponseHelper.createErrorResponse(
                 exception.message,
                 status,
-                [{ code: ApiErrorCode.UnknownError.toString(), description: 'An unexpected error occurred.' }]
+                [{ code: errorCode, description: 'An unexpected error occurred.' }]
             );
         }
 

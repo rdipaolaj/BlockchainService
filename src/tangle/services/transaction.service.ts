@@ -13,7 +13,7 @@ export class TransactionService implements ITransactionService {
 
     constructor() {
         this.client = new Client({
-            nodes: ['http://3.92.78.140:14265'], // Nodo de IOTA
+            nodes: ['http://3.92.78.140:14265'], // Nodo de IOTA - Nodo de prueba https://api.testnet.shimmer.network
         });
     }
 
