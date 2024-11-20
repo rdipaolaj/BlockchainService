@@ -43,4 +43,15 @@ export class BlockchainController extends CustomController {
         const result = await this.queryBus.execute(query);
         return this.OkOrBadRequest(result);
     }
+
+    @Post('register-test-transaction')
+    @ApiBody({
+        description: 'Registrar una transacción de prueba en Tangle',
+        type: RegisterTransactionDto,
+    })
+    async registerTestTransaction(@Body() transactionDto: RegisterTransactionDto) {
+        const command = new RegisterTransactionCommand(transactionDto.transactionData, transactionDto.tag);
+        const result = await this.commandBus.execute(command);
+        return this.OkOrBadRequest(result);
+    }
 }

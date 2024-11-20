@@ -5,6 +5,7 @@ import { NodeService } from './tangle/services/node.service';
 import { TransactionService } from './tangle/services/transaction.service';
 import { TransactionVerificationService } from './tangle/services/transaction-verification.service'; // Importa el servicio de verificación
 import { RegisterTransactionHandler } from './application/commands/handlers/register-transaction.handler';
+import { RegisterTestTransactionHandler } from './application/commands/handlers/register-test-transaction.handler';
 import { GetNodeInfoHandler } from './application/queries/handlers/get-node-info.handler';
 import { RetrieveTransactionHandler } from './application/queries/handlers/retrieve-transaction.handler'; // Importa el handler de verificación
 import { BlockchainController } from './tangle/blockchain.controller';
@@ -26,6 +27,7 @@ import { NODE_SERVICE, TRANSACTION_SERVICE } from './tangle/constants/tangle-ser
     },
     TransactionVerificationService, // Inyectamos el servicio directamente
     RegisterTransactionHandler,
+    RegisterTestTransactionHandler,
     GetNodeInfoHandler,
     RetrieveTransactionHandler, // Inyectamos el handler directamente
     {
